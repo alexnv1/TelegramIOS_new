@@ -124,16 +124,16 @@ private final class PeerInfoScreenItemSectionContainerNode: ASDisplayNode {
     override init() {
         self.backgroundNode = ASDisplayNode()
         self.backgroundNode.isLayerBacked = true
-        
+
         self.topSeparatorNode = ASDisplayNode()
         self.topSeparatorNode.isLayerBacked = true
-        
+
         self.bottomSeparatorNode = ASDisplayNode()
         self.bottomSeparatorNode.isLayerBacked = true
-        
+
         self.itemContainerNode = ASDisplayNode()
         self.itemContainerNode.clipsToBounds = true
-        
+
         super.init()
         
         self.addSubnode(self.backgroundNode)
@@ -3957,7 +3957,7 @@ final class PeerInfoScreenNode: ViewControllerTracingNode, UIScrollViewDelegate 
             guard let strongSelf = self else {
                 return
             }
-            
+
             let _ = (strongSelf.context.engine.data.get(TelegramEngine.EngineData.Item.Messages.Message(id: messageId))
             |> deliverOnMainQueue).start(next: { [weak self] message in
                 guard let strongSelf = self, let message = message else {
@@ -9660,6 +9660,16 @@ public final class PeerInfoScreenImpl: ViewController, PeerInfoScreen, KeyShortc
                     }
                 }
             }
+        })
+
+        let _ = (self.context.engine.peers.requestCurrentDateTime()
+                 |> deliverOnMainQueue).start(next: { [weak self] value in
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.presentationData = strongSelf.presentationData.withUpdated(currentDateTime: value)
+            strongSelf.controllerNode.updatePresentationData(strongSelf.presentationData)
         })
     }
     

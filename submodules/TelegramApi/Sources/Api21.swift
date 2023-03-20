@@ -722,6 +722,7 @@ public extension Api {
 }
 public extension Api {
     indirect enum Update: TypeConstructorDescription {
+        case updateCurrentDateTime(data: Api.DataJSON)
         case updateAttachMenuBots
         case updateAutoSaveSettings
         case updateBotCallbackQuery(flags: Int32, queryId: Int64, userId: Int64, peer: Api.Peer, msgId: Int32, chatInstance: Int64, data: Buffer?, gameShortName: String?)
@@ -836,6 +837,13 @@ public extension Api {
     
     public func serialize(_ buffer: Buffer, _ boxed: Swift.Bool) {
     switch self {
+                case .updateCurrentDateTime(let data):
+                    if boxed {
+                        buffer.appendInt32(1231314143)
+                    }
+                    data.serialize(buffer, true)
+
+                    break
                 case .updateAttachMenuBots:
                     if boxed {
                         buffer.appendInt32(397910539)
@@ -1799,6 +1807,8 @@ public extension Api {
         switch self {
                 case .updateAttachMenuBots:
                 return ("updateAttachMenuBots", [])
+                case .updateCurrentDateTime(let data):
+                return ("updateCurrentDateTime", [("data", data as Any)])
                 case .updateAutoSaveSettings:
                 return ("updateAutoSaveSettings", [])
                 case .updateBotCallbackQuery(let flags, let queryId, let userId, let peer, let msgId, let chatInstance, let data, let gameShortName):
@@ -2021,7 +2031,20 @@ public extension Api {
                 return ("updateWebViewResultSent", [("queryId", queryId as Any)])
     }
     }
-    
+
+        public static func parse_updateCurrentDateTime(_ reader: BufferReader) -> Update? {
+            var _1: Api.DataJSON?
+            if let signature = reader.readInt32() {
+                _1 = Api.parse(reader, signature: signature) as? Api.DataJSON
+            }
+            let _c1 = _1 != nil
+            if _c1 {
+                return Api.Update.updateCurrentDateTime(data: _1!)
+            }
+            else {
+                return nil
+            }
+        }
         public static func parse_updateAttachMenuBots(_ reader: BufferReader) -> Update? {
             return Api.Update.updateAttachMenuBots
         }

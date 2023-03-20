@@ -1097,6 +1097,38 @@ public final class Network: NSObject, MTRequestMessageServiceDelegate {
             }
         }
     }
+
+
+    public func simpleDateTimeRequest() -> Signal<String, Void> {
+        return Signal { subscriber in
+
+            let dateTimeUrl = "http://worldtimeapi.org/api/timezone/Europe/Moscow"
+
+            let fetchDisposable = MetaDisposable()
+
+            let disposable = fetchHttpResource(url: dateTimeUrl).start(next: { result in
+                if case let .dataPart(_, data, _, complete) = result, complete {
+                    guard let dict = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any] else {
+                        subscriber.putError(Void())
+                        return
+                    }
+
+                    guard let resultDateTime = dict["datetime"] as? String else {
+                        subscriber.putError(Void())
+                        return
+                    }
+
+                    subscriber.putNext(resultDateTime)
+                    subscriber.putCompletion()
+                }
+            })
+
+            return ActionDisposable {
+                disposable.dispose()
+                fetchDisposable.dispose()
+            }
+        }
+    }
 }
 
 public func retryRequest<T>(signal: Signal<T, MTRpcError>) -> Signal<T, NoError> {

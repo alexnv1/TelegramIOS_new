@@ -109,6 +109,23 @@ public func stringForFullDate(timestamp: Int32, strings: PresentationStrings, da
     return monthFormat(dayString, yearString, timeString).string
 }
 
+public func stringForDate(stringDate: String, strings: PresentationStrings) -> String? {
+    let formatter = DateFormatter()
+    formatter.locale = localeWithStrings(strings)
+    formatter.timeZone = TimeZone(secondsFromGMT: 0)
+    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSZ"
+    if let date = formatter.date(from: stringDate) {
+        let fullFormatter = DateFormatter()
+        fullFormatter.timeStyle = .none
+        fullFormatter.dateStyle = .medium
+        fullFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        fullFormatter.locale = localeWithStrings(strings)
+        let newDate = fullFormatter.string(from: date)
+        return newDate
+    }
+    return nil
+}
+
 public func stringForDate(timestamp: Int32, strings: PresentationStrings) -> String {
     let formatter = DateFormatter()
     formatter.timeStyle = .none

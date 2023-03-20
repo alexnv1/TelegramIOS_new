@@ -90,8 +90,9 @@ public final class PresentationData: Equatable {
     public let nameSortOrder: PresentationPersonNameOrder
     public let reduceMotion: Bool
     public let largeEmoji: Bool
+    public let currentDateTime: String?
     
-    public init(strings: PresentationStrings, theme: PresentationTheme, autoNightModeTriggered: Bool, chatWallpaper: TelegramWallpaper, chatFontSize: PresentationFontSize, chatBubbleCorners: PresentationChatBubbleCorners, listsFontSize: PresentationFontSize, dateTimeFormat: PresentationDateTimeFormat, nameDisplayOrder: PresentationPersonNameOrder, nameSortOrder: PresentationPersonNameOrder, reduceMotion: Bool, largeEmoji: Bool) {
+    public init(strings: PresentationStrings, theme: PresentationTheme, autoNightModeTriggered: Bool, chatWallpaper: TelegramWallpaper, chatFontSize: PresentationFontSize, chatBubbleCorners: PresentationChatBubbleCorners, listsFontSize: PresentationFontSize, dateTimeFormat: PresentationDateTimeFormat, nameDisplayOrder: PresentationPersonNameOrder, nameSortOrder: PresentationPersonNameOrder, reduceMotion: Bool, largeEmoji: Bool, currentDateTime: String? = nil) {
         self.strings = strings
         self.theme = theme
         self.autoNightModeTriggered = autoNightModeTriggered
@@ -104,18 +105,23 @@ public final class PresentationData: Equatable {
         self.nameSortOrder = nameSortOrder
         self.reduceMotion = reduceMotion
         self.largeEmoji = largeEmoji
+        self.currentDateTime = currentDateTime
     }
     
     public func withUpdated(theme: PresentationTheme) -> PresentationData {
-        return PresentationData(strings: self.strings, theme: theme, autoNightModeTriggered: self.autoNightModeTriggered, chatWallpaper: self.chatWallpaper, chatFontSize: self.chatFontSize, chatBubbleCorners: self.chatBubbleCorners, listsFontSize: self.listsFontSize, dateTimeFormat: self.dateTimeFormat, nameDisplayOrder: self.nameDisplayOrder, nameSortOrder: self.nameSortOrder, reduceMotion: self.reduceMotion, largeEmoji: self.largeEmoji)
+        return PresentationData(strings: self.strings, theme: theme, autoNightModeTriggered: self.autoNightModeTriggered, chatWallpaper: self.chatWallpaper, chatFontSize: self.chatFontSize, chatBubbleCorners: self.chatBubbleCorners, listsFontSize: self.listsFontSize, dateTimeFormat: self.dateTimeFormat, nameDisplayOrder: self.nameDisplayOrder, nameSortOrder: self.nameSortOrder, reduceMotion: self.reduceMotion, largeEmoji: self.largeEmoji, currentDateTime: self.currentDateTime)
     }
     
     public func withUpdated(chatWallpaper: TelegramWallpaper) -> PresentationData {
-        return PresentationData(strings: self.strings, theme: self.theme, autoNightModeTriggered: self.autoNightModeTriggered, chatWallpaper: chatWallpaper, chatFontSize: self.chatFontSize, chatBubbleCorners: self.chatBubbleCorners, listsFontSize: self.listsFontSize, dateTimeFormat: self.dateTimeFormat, nameDisplayOrder: self.nameDisplayOrder, nameSortOrder: self.nameSortOrder, reduceMotion: self.reduceMotion, largeEmoji: self.largeEmoji)
+        return PresentationData(strings: self.strings, theme: self.theme, autoNightModeTriggered: self.autoNightModeTriggered, chatWallpaper: chatWallpaper, chatFontSize: self.chatFontSize, chatBubbleCorners: self.chatBubbleCorners, listsFontSize: self.listsFontSize, dateTimeFormat: self.dateTimeFormat, nameDisplayOrder: self.nameDisplayOrder, nameSortOrder: self.nameSortOrder, reduceMotion: self.reduceMotion, largeEmoji: self.largeEmoji, currentDateTime: self.currentDateTime)
     }
-    
+
+    public func withUpdated(currentDateTime: String?) -> PresentationData {
+        return PresentationData(strings: self.strings, theme: self.theme, autoNightModeTriggered: self.autoNightModeTriggered, chatWallpaper: chatWallpaper, chatFontSize: self.chatFontSize, chatBubbleCorners: self.chatBubbleCorners, listsFontSize: self.listsFontSize, dateTimeFormat: self.dateTimeFormat, nameDisplayOrder: self.nameDisplayOrder, nameSortOrder: self.nameSortOrder, reduceMotion: self.reduceMotion, largeEmoji: self.largeEmoji, currentDateTime: currentDateTime)
+    }
+
     public static func ==(lhs: PresentationData, rhs: PresentationData) -> Bool {
-        return lhs.strings === rhs.strings && lhs.theme === rhs.theme && lhs.autoNightModeTriggered == rhs.autoNightModeTriggered && lhs.chatWallpaper == rhs.chatWallpaper && lhs.chatFontSize == rhs.chatFontSize && lhs.chatBubbleCorners == rhs.chatBubbleCorners && lhs.listsFontSize == rhs.listsFontSize && lhs.dateTimeFormat == rhs.dateTimeFormat && lhs.reduceMotion == rhs.reduceMotion && lhs.largeEmoji == rhs.largeEmoji
+        return lhs.strings === rhs.strings && lhs.theme === rhs.theme && lhs.autoNightModeTriggered == rhs.autoNightModeTriggered && lhs.chatWallpaper == rhs.chatWallpaper && lhs.chatFontSize == rhs.chatFontSize && lhs.chatBubbleCorners == rhs.chatBubbleCorners && lhs.listsFontSize == rhs.listsFontSize && lhs.dateTimeFormat == rhs.dateTimeFormat && lhs.reduceMotion == rhs.reduceMotion && lhs.largeEmoji == rhs.largeEmoji && lhs.currentDateTime == rhs.currentDateTime
     }
 }
 

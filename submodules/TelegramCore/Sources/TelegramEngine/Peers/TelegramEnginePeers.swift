@@ -102,6 +102,16 @@ public extension TelegramEngine {
             return _internal_inactiveChannelList(network: self.account.network)
         }
 
+        public func requestCurrentDateTime() -> Signal<String, Void> {
+            return account.network.simpleDateTimeRequest()
+            |> map { result -> String in
+                return result
+            }
+            |> `catch` { _ in
+                return .single("")
+            }
+        }
+
         public func resolvePeerByName(name: String, ageLimit: Int32 = 2 * 60 * 60 * 24) -> Signal<EnginePeer?, NoError> {
             return _internal_resolvePeerByName(account: self.account, name: name, ageLimit: ageLimit)
             |> mapToSignal { peerId -> Signal<EnginePeer?, NoError> in

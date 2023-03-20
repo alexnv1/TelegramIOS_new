@@ -784,6 +784,7 @@ fileprivate let parsers: [Int32 : (BufferReader) -> Any?] = {
     dict[-1122524854] = { return Api.TopPeerCategory.parse_topPeerCategoryGroups($0) }
     dict[511092620] = { return Api.TopPeerCategory.parse_topPeerCategoryPhoneCalls($0) }
     dict[-75283823] = { return Api.TopPeerCategoryPeers.parse_topPeerCategoryPeers($0) }
+    dict[1231314143] = { return Api.Update.parse_updateCurrentDateTime($0) }
     dict[397910539] = { return Api.Update.parse_updateAttachMenuBots($0) }
     dict[-335171433] = { return Api.Update.parse_updateAutoSaveSettings($0) }
     dict[-1177566067] = { return Api.Update.parse_updateBotCallbackQuery($0) }

@@ -70,11 +70,12 @@ private final class PeerInfoScreenCallListItemNode: PeerInfoScreenItemNode {
         
         self.bottomSeparatorNode.backgroundColor = presentationData.theme.list.itemBlocksSeparatorColor
         
-        let addressItem = ItemListCallListItem(presentationData: ItemListPresentationData(presentationData), dateTimeFormat: presentationData.dateTimeFormat, messages: item.messages, sectionId: 0, style: .blocks, displayDecorations: false)
+        let addressItem = ItemListCallListItem(presentationData: ItemListPresentationData(presentationData), dateTimeFormat: presentationData.dateTimeFormat, messages: item.messages, sectionId: 0, style: .blocks, displayDecorations: false, currentDateTime: presentationData.currentDateTime)
         
         let params = ListViewItemLayoutParams(width: width, leftInset: safeInsets.left, rightInset: safeInsets.right, availableHeight: 1000.0)
         
         let itemNode: ItemListCallListItemNode
+
         if let current = self.itemNode {
             itemNode = current
             addressItem.updateNode(async: { $0() }, node: {
