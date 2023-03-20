@@ -740,29 +740,31 @@ private func extractAccountManagerState(records: AccountRecordsView<TelegramAcco
                 }
             })
         }, requestSiriAuthorization: { completion in
-            if #available(iOS 10, *) {
-                INPreferences.requestSiriAuthorization { status in
-                    if case .authorized = status {
-                        completion(true)
-                    } else {
-                        completion(false)
-                    }
-                }
-            } else {
-                completion(false)
-            }
+//            if #available(iOS 10, *) {
+//                INPreferences.requestSiriAuthorization { status in
+//                    if case .authorized = status {
+//                        completion(true)
+//                    } else {
+//                        completion(false)
+//                    }
+//                }
+//            } else {
+//                completion(false)
+//            }
         }, siriAuthorization: {
             if #available(iOS 10, *) {
-                switch INPreferences.siriAuthorizationStatus() {
-                    case .authorized:
-                        return .allowed
-                    case .denied, .restricted:
-                        return .denied
-                    case .notDetermined:
-                        return .notDetermined
-                    @unknown default:
-                        return .notDetermined
-                }
+                return .denied
+
+//                switch INPreferences.siriAuthorizationStatus() {
+//                    case .authorized:
+//                        return .allowed
+//                    case .denied, .restricted:
+//                        return .denied
+//                    case .notDetermined:
+//                        return .notDetermined
+//                    @unknown default:
+//                        return .notDetermined
+//                }
             } else {
                 return .denied
             }
